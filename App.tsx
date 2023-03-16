@@ -5,7 +5,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {ThemeProvider} from 'styled-components/native';
-import LandingScreen from './screens/LandingScreen';
+import RootStack from './navigation/RootStack';
 import darkTheme from './styles/themes/darkTheme';
 import lightTheme from './styles/themes/lightTheme';
 
@@ -20,7 +20,7 @@ function App(): JSX.Element {
     <SafeAreaProvider>
       <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
         <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} backgroundColor={backgroundStyle.backgroundColor} />
-        <LandingScreen />
+        <RootStack />
       </ThemeProvider>
     </SafeAreaProvider>
   );
