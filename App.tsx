@@ -1,8 +1,13 @@
 import React from 'react';
 
-import {SafeAreaView, StatusBar, StyleSheet, Text, useColorScheme} from 'react-native';
+import {StatusBar, useColorScheme} from 'react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {ThemeProvider} from 'styled-components/native';
+import LandingScreen from './screens/LandingScreen';
+import darkTheme from './styles/themes/darkTheme';
+import lightTheme from './styles/themes/lightTheme';
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -12,25 +17,13 @@ function App(): JSX.Element {
   };
 
   return (
-    <SafeAreaView style={[styles.container, backgroundStyle]}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} backgroundColor={backgroundStyle.backgroundColor} />
-
-      <Text style={styles.title}>Hello world</Text>
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} backgroundColor={backgroundStyle.backgroundColor} />
+        <LandingScreen />
+      </ThemeProvider>
+    </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: '#000',
-  },
-});
 
 export default App;
