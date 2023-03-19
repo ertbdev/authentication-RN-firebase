@@ -2,6 +2,7 @@ import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useTheme} from 'styled-components/native';
+import i18n from '../assets/locale/i18n';
 import {Colors} from '../styles/themes/types';
 
 const LandingScreen = () => {
@@ -10,7 +11,7 @@ const LandingScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea} edges={['left', 'right', 'top']}>
       <View style={styles.container}>
-        <Text style={styles.title}>Hello world</Text>
+        <Text style={styles.title}>{i18n.t('hello')}</Text>
       </View>
     </SafeAreaView>
   );
