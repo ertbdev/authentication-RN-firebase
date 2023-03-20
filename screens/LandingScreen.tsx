@@ -4,6 +4,7 @@ import {Text, View, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useTheme} from 'styled-components/native';
 import {RootStackParamList} from '../navigation/types';
+import i18n from '../assets/locale/i18n';
 import {Colors} from '../styles/themes/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
@@ -19,7 +20,7 @@ const LandingScreen = ({navigation}: Props) => {
   return (
     <SafeAreaView style={styles.safeArea} edges={['left', 'right', 'top']}>
       <View style={styles.container}>
-        <Text style={styles.title}>Home</Text>
+        <Text style={styles.title}>{i18n.t('hello')}</Text>
         <Text onPress={handleGoToScreen1} style={styles.text}>
           Go to Screen1
         </Text>

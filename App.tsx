@@ -6,6 +6,8 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {ThemeProvider} from 'styled-components/native';
 import RootStack from './navigation/RootStack';
+import i18n from './assets/locale/i18n';
+import LandingScreen from './screens/LandingScreen';
 import darkTheme from './styles/themes/darkTheme';
 import lightTheme from './styles/themes/lightTheme';
 
@@ -15,6 +17,10 @@ function App(): JSX.Element {
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
+
+  i18n.defaultLocale = 'en';
+  i18n.locale = 'en';
+  i18n.enableFallback = true;
 
   return (
     <SafeAreaProvider>
