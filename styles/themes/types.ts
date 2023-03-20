@@ -7,6 +7,7 @@ type Color = {
 export type Colors = {
   primary: Color;
   secondary: Color;
+  text: Color;
   error: Color;
   warning: Color;
   info: Color;
@@ -14,5 +15,6 @@ export type Colors = {
   background: {
     screen: string;
     card: string;
+    textInput: string;
   };
 };

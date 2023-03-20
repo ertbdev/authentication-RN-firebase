@@ -12,6 +12,11 @@ const darkTheme: DefaultTheme = {
       main: '#ce93d8',
       dark: '#ab47bc',
     },
+    text: {
+      light: '#595959',
+      main: '#b3b3b3',
+      dark: '#FFF',
+    },
     error: {
       light: '#e57373',
       main: '#f44336',
@@ -35,6 +40,7 @@ const darkTheme: DefaultTheme = {
     background: {
       screen: '#242528',
       card: '#242528',
+      textInput: '#242528',
     },
   },
 };

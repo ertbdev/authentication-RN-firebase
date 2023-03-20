@@ -7,7 +7,6 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {ThemeProvider} from 'styled-components/native';
 import RootStack from './navigation/RootStack';
 import i18n from './assets/locale/i18n';
-import LandingScreen from './screens/LandingScreen';
 import darkTheme from './styles/themes/darkTheme';
 import lightTheme from './styles/themes/lightTheme';
 

@@ -8,14 +8,14 @@ import i18n from '../assets/locale/i18n';
 import {Colors} from '../styles/themes/types';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'LandingScreen'>;
 
 const LandingScreen = ({navigation}: Props) => {
   const {colors} = useTheme();
   const styles = makeStyles(colors);
 
   const handleGoToScreen1 = () => {
-    navigation.navigate('Screen1');
+    navigation.navigate('Home');
   };
 
   return (
