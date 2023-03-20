@@ -6,6 +6,7 @@ import {useTheme} from 'styled-components/native';
 import {RootStackParamList} from '../navigation/types';
 import i18n from '../assets/locale/i18n';
 import {Colors} from '../styles/themes/types';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
@@ -24,6 +25,7 @@ const LandingScreen = ({navigation}: Props) => {
         <Text onPress={handleGoToScreen1} style={styles.text}>
           Go to Screen1
         </Text>
+        <Icon name="application-brackets" size={50} color={colors.primary.main} />
       </View>
     </SafeAreaView>
   );
