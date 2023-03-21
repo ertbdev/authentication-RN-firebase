@@ -19,10 +19,10 @@ const ThemedStatusBar = ({isDarkMode}: {isDarkMode: boolean}) => {
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
-  const {languageTag} = findBestAvailableLanguage(['en', 'es', 'pl']) as {languageTag: string; isRTL: boolean};
+  const bestAvailableLanguage = findBestAvailableLanguage(['en', 'es', 'pl']);
 
   i18n.defaultLocale = 'en';
-  i18n.locale = languageTag;
+  i18n.locale = bestAvailableLanguage ? bestAvailableLanguage.languageTag : 'en';
   i18n.enableFallback = true;
 
   return (
