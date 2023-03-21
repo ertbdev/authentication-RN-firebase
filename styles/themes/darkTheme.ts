@@ -39,9 +39,10 @@ const darkTheme: DefaultTheme = {
       dark: '#388e3c',
     },
     background: {
-      screen: '#242528',
+      screen: '#303236',
       card: '#242528',
       textInput: '#242528',
+      statusBar: '#303236',
     },
   },
 };

@@ -16,5 +16,6 @@ export type Colors = {
     screen: string;
     card: string;
     textInput: string;
+    statusBar: string;
   };
 };

@@ -42,6 +42,7 @@ const lightTheme: DefaultTheme = {
       screen: '#e3f2fd',
       card: '#e3f2fd',
       textInput: '#e3f2fd',
+      statusBar: '#e3f2fd',
     },
   },
 };
