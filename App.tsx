@@ -9,6 +9,7 @@ import i18n from './assets/locale/i18n';
 import darkTheme from './styles/themes/darkTheme';
 import lightTheme from './styles/themes/lightTheme';
 import {useTheme} from 'styled-components/native';
+import {findBestAvailableLanguage} from 'react-native-localize';
 
 const ThemedStatusBar = ({isDarkMode}: {isDarkMode: boolean}) => {
   const {colors} = useTheme();
@@ -18,8 +19,10 @@ const ThemedStatusBar = ({isDarkMode}: {isDarkMode: boolean}) => {
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
+  const {languageTag} = findBestAvailableLanguage(['en', 'es', 'pl']) as {languageTag: string; isRTL: boolean};
+
   i18n.defaultLocale = 'en';
-  i18n.locale = 'en';
+  i18n.locale = languageTag;
   i18n.enableFallback = true;
 
   return (
