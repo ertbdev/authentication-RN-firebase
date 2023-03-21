@@ -9,6 +9,7 @@ import TextInput from '../../components/common/TextInput';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Button from '../../components/common/Button';
 import i18n from '../../assets/locale/i18n';
+import WrapperAvoidance from '../../components/common/WrapperAvoidance';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SignInScreen'>;
 
@@ -24,28 +25,30 @@ const SignInScreen = ({navigation}: Props) => {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['left', 'right', 'top']}>
-      <View style={styles.container}>
-        <Icon name="lock" size={70} color={colors.primary.main} style={styles.icon} />
-        <TextInput
-          label={`${i18n.t('email-address')}:`}
-          width={'90%'}
-          keyboardType="email-address"
-          left={<Icon name="at" size={25} color={colors.text.light} />}
-        />
-        <TextInput
-          label={`${i18n.t('password')}:`}
-          width={'90%'}
-          keyboardType="ascii-capable"
-          secureTextEntry={!showPassword}
-          left={<Icon name="lock" size={25} color={colors.text.light} />}
-          right={<Icon name={showPassword ? 'eye-off' : 'eye'} size={25} color={colors.text.light} />}
-          onRightPress={toggleShowPassword}
-        />
+      <WrapperAvoidance>
+        <View style={styles.container}>
+          <Icon name="lock" size={70} color={colors.primary.main} style={styles.icon} />
+          <TextInput
+            label={`${i18n.t('email-address')}:`}
+            width={'90%'}
+            keyboardType="email-address"
+            left={<Icon name="at" size={25} color={colors.text.light} />}
+          />
+          <TextInput
+            label={`${i18n.t('password')}:`}
+            width={'90%'}
+            keyboardType="ascii-capable"
+            secureTextEntry={!showPassword}
+            left={<Icon name="lock" size={25} color={colors.text.light} />}
+            right={<Icon name={showPassword ? 'eye-off' : 'eye'} size={25} color={colors.text.light} />}
+            onRightPress={toggleShowPassword}
+          />
 
-        <Button minWidth="88%" height={50} borderRadius={15} margin={[10, 0, 0, 0]}>
-          {i18n.t('sign-in')}
-        </Button>
-      </View>
+          <Button minWidth="88%" height={50} borderRadius={15} margin={[10, 0, 0, 0]}>
+            {i18n.t('sign-in')}
+          </Button>
+        </View>
+      </WrapperAvoidance>
     </SafeAreaView>
   );
 };
