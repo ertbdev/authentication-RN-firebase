@@ -7,7 +7,7 @@ type Color = {
 export type Colors = {
   primary: Color;
   secondary: Color;
-  text: Color;
+  text: Color & {button: string};
   error: Color;
   warning: Color;
   info: Color;

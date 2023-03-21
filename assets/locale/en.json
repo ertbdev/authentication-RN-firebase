@@ -1,3 +1,5 @@
 {
-  "hello": "Hello user"
+  "email-address": "Email address",
+  "password": "Password",
+  "sign-in": "Sign in"
 }

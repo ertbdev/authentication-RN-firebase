@@ -1,3 +1,5 @@
 {
-  "hello": "Witaj użytkowniku"
+  "email-address": "Adres e-mail",
+  "password": "Hasło",
+  "sign-in": "Zaloguj się"
 }

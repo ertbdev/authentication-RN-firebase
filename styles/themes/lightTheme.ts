@@ -16,6 +16,7 @@ const lightTheme: DefaultTheme = {
       light: '#b3b3b3',
       main: '#595959',
       dark: '#000',
+      button: '#FFF',
     },
     error: {
       light: '#e57373',

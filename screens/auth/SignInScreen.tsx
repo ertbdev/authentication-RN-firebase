@@ -7,6 +7,8 @@ import {RootStackParamList} from '../../navigation/types';
 import {Colors} from '../../styles/themes/types';
 import TextInput from '../../components/common/TextInput';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Button from '../../components/common/Button';
+import i18n from '../../assets/locale/i18n';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SignInScreen'>;
 
@@ -25,13 +27,13 @@ const SignInScreen = ({navigation}: Props) => {
       <View style={styles.container}>
         <Icon name="lock" size={70} color={colors.primary.main} style={styles.icon} />
         <TextInput
-          label="Email address:"
+          label={`${i18n.t('email-address')}:`}
           width={'90%'}
           keyboardType="email-address"
           left={<Icon name="at" size={25} color={colors.text.light} />}
         />
         <TextInput
-          label="Password:"
+          label={`${i18n.t('password')}:`}
           width={'90%'}
           keyboardType="ascii-capable"
           secureTextEntry={!showPassword}
@@ -39,6 +41,10 @@ const SignInScreen = ({navigation}: Props) => {
           right={<Icon name={showPassword ? 'eye-off' : 'eye'} size={25} color={colors.text.light} />}
           onRightPress={toggleShowPassword}
         />
+
+        <Button minWidth="88%" height={50} borderRadius={15} margin={[10, 0, 0, 0]}>
+          {i18n.t('sign-in')}
+        </Button>
       </View>
     </SafeAreaView>
   );
