@@ -1,5 +1,8 @@
 {
   "email-address": "Correo electronico",
   "password": "Contraseña",
-  "sign-in": "Iniciar sesión"
+  "sign-in": "Iniciar sesión",
+  "sign-up": "Regístrate",
+  "have-account": "Tienes una cuenta",
+  "do-not-have-account": "No tienes una Cuenta"
 }

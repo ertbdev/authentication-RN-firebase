@@ -1,5 +1,8 @@
 {
   "email-address": "Adres e-mail",
   "password": "Hasło",
-  "sign-in": "Zaloguj się"
+  "sign-in": "Zaloguj się",
+  "sign-up": "Utwórz konto",
+  "have-account": "Masz konta?",
+  "do-not-have-account": "Nie masz konta?"
 }

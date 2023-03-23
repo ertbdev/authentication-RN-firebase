@@ -11,20 +11,24 @@ import Button from '../../components/common/Button';
 import i18n from '../../assets/locale/i18n';
 import WrapperAvoidance from '../../components/common/WrapperAvoidance';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'SignInScreen'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'SignUpScreen'>;
 
 const SignInScreen = ({navigation}: Props) => {
   const {colors} = useTheme();
   const styles = makeStyles(colors);
 
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const toggleShowPassword = () => {
     setShowPassword(old => !old);
   };
+  const toggleShowConfirmPassword = () => {
+    setShowConfirmPassword(old => !old);
+  };
 
   const handleSignUpPress = () => {
-    navigation.navigate('SignUpScreen');
+    navigation.navigate('SignInScreen');
   };
 
   return (
@@ -51,15 +55,25 @@ const SignInScreen = ({navigation}: Props) => {
               onRightPress={toggleShowPassword}
             />
 
+            <TextInput
+              label={`${i18n.t('password')}:`}
+              width={'90%'}
+              keyboardType="ascii-capable"
+              secureTextEntry={!showConfirmPassword}
+              left={<Icon name="lock" size={25} color={colors.text.light} />}
+              right={<Icon name={showConfirmPassword ? 'eye-off' : 'eye'} size={25} color={colors.text.light} />}
+              onRightPress={toggleShowConfirmPassword}
+            />
+
             <Button minWidth="88%" height={50} borderRadius={15} margin={[10, 0, 0, 0]}>
-              {i18n.t('sign-in')}
+              {i18n.t('sign-up')}
             </Button>
           </View>
 
           <View style={styles.bottomContainer}>
-            <Text style={styles.noAccountText}>{i18n.t('do-not-have-account')}? </Text>
+            <Text style={styles.accountText}>{i18n.t('have-account')}? </Text>
             <Pressable onPress={handleSignUpPress}>
-              <Text style={styles.signUpText}>{i18n.t('sign-up')}</Text>
+              <Text style={styles.signUpText}>{i18n.t('sign-in')}</Text>
             </Pressable>
           </View>
         </View>
@@ -105,7 +119,7 @@ const makeStyles = (colors: Colors) =>
       justifyContent: 'center',
       paddingBottom: 20,
     },
-    noAccountText: {
+    accountText: {
       fontSize: 14,
       color: colors.primary.main,
     },

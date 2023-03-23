@@ -1,5 +1,8 @@
 {
   "email-address": "Email address",
   "password": "Password",
-  "sign-in": "Sign in"
+  "sign-in": "Sign in",
+  "sign-up": "Sign up",
+  "have-account": "Have an Account",
+  "do-not-have-account": "Don't have an Account"
 }
