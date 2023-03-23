@@ -4,6 +4,7 @@ import {StatusBar, useColorScheme} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 import {ThemeProvider} from 'styled-components/native';
+import {AuthProvider} from './providers/AuthProvider';
 import RootStack from './navigation/RootStack';
 import i18n from './assets/locale/i18n';
 import darkTheme from './styles/themes/darkTheme';
@@ -27,10 +28,12 @@ function App(): JSX.Element {
 
   return (
     <SafeAreaProvider>
-      <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-        <ThemedStatusBar isDarkMode={isDarkMode} />
-        <RootStack />
-      </ThemeProvider>
+      <AuthProvider>
+        <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+          <ThemedStatusBar isDarkMode={isDarkMode} />
+          <RootStack />
+        </ThemeProvider>
+      </AuthProvider>
     </SafeAreaProvider>
   );
 }
