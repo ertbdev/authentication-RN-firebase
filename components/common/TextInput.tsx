@@ -1,4 +1,4 @@
-import React, {ReactNode, RefObject, useState} from 'react';
+import React, {forwardRef, ReactNode, RefObject, useState} from 'react';
 
 import {
   StyleSheet,
@@ -17,7 +17,6 @@ import {useTheme} from 'styled-components/native';
 import {Colors} from '../../styles/themes/types';
 
 type Props = {
-  ref?: RefObject<RNTextInput>;
   /** Used to locate this view in end-to-end tests */
   testID?: string;
   /** Determines the height of the textInput */
@@ -58,96 +57,100 @@ type Props = {
   onFocus?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
 };
 
-const TextInput = ({
-  ref,
-  testID,
-  height,
-  width = '100%',
-  label,
-  labelStyle,
-  value,
-  error,
-  multiline,
-  keyboardType,
-  right,
-  left,
-  editable = true,
-  placeholder,
-  secureTextEntry = false,
-  onFocus,
-  onChangeText,
-  onBlur,
-  onLeftPress,
-  onRightPress,
-}: Props) => {
-  const {colors} = useTheme();
+const TextInput = forwardRef<RNTextInput | null, Props>(
+  (
+    {
+      testID,
+      height,
+      width = '100%',
+      label,
+      labelStyle,
+      value,
+      error,
+      multiline,
+      keyboardType,
+      right,
+      left,
+      editable = true,
+      placeholder,
+      secureTextEntry = false,
+      onFocus,
+      onChangeText,
+      onBlur,
+      onLeftPress,
+      onRightPress,
+    }: Props,
+    ref,
+  ) => {
+    const {colors} = useTheme();
 
-  const _height = height ? height : multiline ? 115 : 50;
-  const styles = makeStyles(colors, _height, width, multiline, Boolean(error));
+    const _height = height ? height : multiline ? 115 : 50;
+    const styles = makeStyles(colors, _height, width, multiline, Boolean(error));
 
-  const [padLeft, setPadLeft] = useState(left ? _height : Math.ceil(_height / 5));
-  const [padRight, setPadRight] = useState(right ? _height : Math.ceil(_height / 5));
+    const [padLeft, setPadLeft] = useState(left ? _height : Math.ceil(_height / 5));
+    const [padRight, setPadRight] = useState(right ? _height : Math.ceil(_height / 5));
 
-  const getPaddingLeft = (event: LayoutChangeEvent) => {
-    setPadLeft(event.nativeEvent.layout.width);
-  };
+    const getPaddingLeft = (event: LayoutChangeEvent) => {
+      setPadLeft(event.nativeEvent.layout.width);
+    };
 
-  const getPaddingRight = (event: LayoutChangeEvent) => {
-    setPadRight(event.nativeEvent.layout.width);
-  };
+    const getPaddingRight = (event: LayoutChangeEvent) => {
+      setPadRight(event.nativeEvent.layout.width);
+    };
 
-  return (
-    <View style={styles.container}>
-      {label ? (
-        <Text testID={`${testID}-label-text`} style={[styles.label, labelStyle]}>
-          {label}
-        </Text>
-      ) : null}
-      <View>
-        <RNTextInput
-          ref={ref}
-          testID={`${testID}-input`}
-          style={[styles.input, {paddingLeft: padLeft, paddingRight: padRight}]}
-          value={value}
-          placeholder={placeholder}
-          placeholderTextColor={colors.text.light}
-          multiline={multiline}
-          onChangeText={onChangeText}
-          onBlur={onBlur}
-          onFocus={onFocus}
-          keyboardType={keyboardType}
-          editable={editable}
-          secureTextEntry={secureTextEntry}
-        />
-        {left ? (
-          <Pressable
-            onPress={onLeftPress}
-            onLayout={getPaddingLeft}
-            pointerEvents={onLeftPress ? undefined : 'none'}
-            style={styles.leftContainer}>
-            {left}
-          </Pressable>
+    return (
+      <View style={styles.container}>
+        {label ? (
+          <Text testID={`${testID}-label-text`} style={[styles.label, labelStyle]}>
+            {label}
+          </Text>
         ) : null}
-        {right ? (
-          <Pressable
-            onPress={onRightPress}
-            onLayout={getPaddingRight}
-            pointerEvents={onRightPress ? undefined : 'none'}
-            style={styles.rightContainer}>
-            {right}
-          </Pressable>
+        <View>
+          <RNTextInput
+            ref={ref}
+            testID={`${testID}-input`}
+            style={[styles.input, {paddingLeft: padLeft, paddingRight: padRight}]}
+            value={value}
+            placeholder={placeholder}
+            placeholderTextColor={colors.text.light}
+            multiline={multiline}
+            onChangeText={onChangeText}
+            onBlur={onBlur}
+            onFocus={onFocus}
+            keyboardType={keyboardType}
+            editable={editable}
+            secureTextEntry={secureTextEntry}
+          />
+          {left ? (
+            <Pressable
+              onPress={onLeftPress}
+              onLayout={getPaddingLeft}
+              pointerEvents={onLeftPress ? undefined : 'none'}
+              style={styles.leftContainer}>
+              {left}
+            </Pressable>
+          ) : null}
+          {right ? (
+            <Pressable
+              onPress={onRightPress}
+              onLayout={getPaddingRight}
+              pointerEvents={onRightPress ? undefined : 'none'}
+              style={styles.rightContainer}>
+              {right}
+            </Pressable>
+          ) : null}
+        </View>
+        {error && Boolean(error) ? (
+          <View style={styles.errorContainer}>
+            <Text testID={`${testID}-error-text`} style={styles.errorText}>
+              {error}
+            </Text>
+          </View>
         ) : null}
       </View>
-      {error && Boolean(error) ? (
-        <View style={styles.errorContainer}>
-          <Text testID={`${testID}-error-text`} style={styles.errorText}>
-            {error}
-          </Text>
-        </View>
-      ) : null}
-    </View>
-  );
-};
+    );
+  },
+);
 
 const makeStyles = (colors: Colors, height: number, width: number | string, multiline?: boolean, error?: boolean) =>
   StyleSheet.create({
@@ -207,3 +210,5 @@ const makeStyles = (colors: Colors, height: number, width: number | string, mult
   });
 
 export default TextInput;
+
+export type TextInputRef = RefObject<RNTextInput>;

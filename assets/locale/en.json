@@ -1,8 +1,21 @@
 {
+  "do-not-have-account": "Don't have an Account",
   "email-address": "Email address",
+  "have-account": "Have an Account",
   "password": "Password",
   "sign-in": "Sign in",
   "sign-up": "Sign up",
-  "have-account": "Have an Account",
-  "do-not-have-account": "Don't have an Account"
+  "errors": {
+    "email-malformed": "Email address is invalid",
+    "email-required": "Email address is required",
+    "password-match": "Passwords must match",
+    "password-max": "Must contain a maximum of 25 characters",
+    "password-min": "Must contain at least 8 characters",
+    "password-number": "Must contain at least one number",
+    "password-lower-case": "Must contain at least one lowercase",
+    "password-required": "Password is required",
+    "password-special-character": "Must contain at least one special case character",
+    "password-upper-case": "Must contain at least one uppercase",
+    "password-wrong": "Wrong password"
+  }
 }

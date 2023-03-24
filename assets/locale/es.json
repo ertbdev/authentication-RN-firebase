@@ -1,8 +1,21 @@
 {
+  "do-not-have-account": "No tienes una Cuenta",
   "email-address": "Correo electronico",
+  "have-account": "Tienes una cuenta",
   "password": "Contraseña",
   "sign-in": "Iniciar sesión",
   "sign-up": "Regístrate",
-  "have-account": "Tienes una cuenta",
-  "do-not-have-account": "No tienes una Cuenta"
+  "errors": {
+    "email-malformed": "El correo electrónico es inválido",
+    "email-required": "El correo electrónico es obligatorio",
+    "password-match": "Las contraseñas deben coincidir",
+    "password-max": "Debe contener un máximo de 25 caracteres",
+    "password-min": "Debe contener al menos 8 caracteres",
+    "password-number": "Debe contener al menos un número",
+    "password-lower-case": "Debe contener al menos una minúscula",
+    "password-required": "La contraseña es obligatoria",
+    "password-special-character": "Debe contener al menos un carácter especial",
+    "password-upper-case": "Debe contener al menos una mayúscula",
+    "password-wrong": "Contraseña incorrecta"
+  }
 }

@@ -1,8 +1,21 @@
 {
+  "do-not-have-account": "Nie masz konta",
   "email-address": "Adres e-mail",
+  "have-account": "Masz konta?",
   "password": "Hasło",
   "sign-in": "Zaloguj się",
   "sign-up": "Utwórz konto",
-  "have-account": "Masz konta?",
-  "do-not-have-account": "Nie masz konta?"
+  "errors": {
+    "email-malformed": "Adres email jest błędny",
+    "email-required": "Adres email jest wymagany",
+    "password-match": "Hasła muszą być takie same",
+    "password-max": "Hasło musi posiadać maksymalnie 25 znaków",
+    "password-min": "Hasło musi posiadać minimalnie 8 znaków",
+    "password-number": "Hasło musi zawierać co najmniej 1 cyfrę",
+    "password-lower-case": "Hasło musi posiadać co najmniej 1 małą literę",
+    "password-required": "Hasło jest wymagane",
+    "password-special-character": "Hasło musi zawierać co najmniej 1 znak specjalny",
+    "password-upper-case": "Hasło musi posiadać co najmniej 1 wielką literę",
+    "password-wrong": "Błędne hasło"
+  }
 }
