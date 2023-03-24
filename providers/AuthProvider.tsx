@@ -4,14 +4,12 @@ import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 
 type AuthContext = {
   user?: FirebaseAuthTypes.User | null;
-  error?: string;
-  signInUser?: (email: string, password: string) => Promise<void>;
-  signUpUser?: (email: string, password: string) => Promise<void>;
-  signOutUser?: () => Promise<void>;
-  clearError?: () => void;
+  signInUser: (email: string, password: string) => Promise<void>;
+  signUpUser: (email: string, password: string) => Promise<void>;
+  signOutUser: () => Promise<void>;
 };
 
-const context = createContext<AuthContext>({});
+const context = createContext<AuthContext | null>(null);
 
 const getAuthError = (firebaseError: string) => {
   switch (firebaseError) {
@@ -28,7 +26,6 @@ const getAuthError = (firebaseError: string) => {
 
 export const AuthProvider = ({children}: {children: JSX.Element}) => {
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>();
-  const [error, setError] = useState<string>();
 
   const signInUser = useCallback(async (email: string, password: string) => {
     try {
@@ -36,7 +33,7 @@ export const AuthProvider = ({children}: {children: JSX.Element}) => {
     } catch (err) {
       const firebaseError = err as {code: string};
       const _error = getAuthError(firebaseError.code);
-      setError(_error);
+      throw _error;
     }
   }, []);
 
@@ -46,7 +43,7 @@ export const AuthProvider = ({children}: {children: JSX.Element}) => {
     } catch (err) {
       const firebaseError = err as {code: string};
       const _error = getAuthError(firebaseError.code);
-      setError(_error);
+      throw _error;
     }
   }, []);
 
@@ -57,12 +54,8 @@ export const AuthProvider = ({children}: {children: JSX.Element}) => {
     } catch (err) {
       const firebaseError = err as {code: string};
       const _error = getAuthError(firebaseError.code);
-      setError(_error);
+      throw _error;
     }
-  };
-
-  const clearError = () => {
-    setError(undefined);
   };
 
   const getLoggedUser = useCallback(async (loggedUser: FirebaseAuthTypes.User | null) => {
@@ -78,21 +71,20 @@ export const AuthProvider = ({children}: {children: JSX.Element}) => {
   const contextValue = useMemo<AuthContext>(
     () => ({
       user,
-      error,
       signInUser,
       signUpUser,
       signOutUser,
-      clearError,
     }),
-    [user, error, signInUser, signUpUser],
+    [user, signInUser, signUpUser],
   );
 
   return <context.Provider value={contextValue}>{children}</context.Provider>;
 };
 
-export const useGetLoggedUser = () => useContext(context).user;
-export const useGetAuthError = () => useContext(context).error;
-export const useSignIn = () => useContext(context).signInUser;
-export const useSignUp = () => useContext(context).signUpUser;
-export const useSignOut = () => useContext(context).signOutUser;
-export const useClearAuthError = () => useContext(context).clearError;
+export const useAuthContext = () => {
+  const authContext = useContext(context);
+  if (!authContext) {
+    throw new Error('authContext error');
+  }
+  return authContext;
+};

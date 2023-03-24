@@ -12,6 +12,7 @@ import i18n from '../../assets/locale/i18n';
 import WrapperAvoidance from '../../components/common/WrapperAvoidance';
 import {signInSchema} from '../../schemas/signInSchema';
 import {getAuthYupErrors} from '../../functions/getYupErrors';
+import {useAuthContext} from '../../providers/AuthProvider';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SignInScreen'>;
 
@@ -28,6 +29,8 @@ type FormErrors = {
 const SignInScreen = ({navigation}: Props) => {
   const {colors} = useTheme();
   const styles = makeStyles(colors);
+
+  const signIn = useAuthContext().signInUser;
 
   const emailRef: TextInputRef = useRef(null);
   const passwordRef: TextInputRef = useRef(null);
@@ -48,8 +51,13 @@ const SignInScreen = ({navigation}: Props) => {
   const handleSubmit = async () => {
     try {
       await signInSchema.validate({...form.current}, {abortEarly: false});
+      await signIn(form.current.email, form.current.password);
     } catch (err) {
-      setErrors(getAuthYupErrors((err as {inner: {message: string; path: keyof FormFields}[]}).inner));
+      if (typeof err === 'string') {
+        console.log(err);
+      } else {
+        setErrors(getAuthYupErrors((err as {inner: {message: string; path: keyof FormFields}[]}).inner));
+      }
     }
   };
 
