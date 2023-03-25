@@ -19,6 +19,8 @@ const getAuthError = (firebaseError: string) => {
       return 'user-not-found';
     case 'auth/wrong-password':
       return 'wrong-password';
+    case 'auth/too-many-requests':
+      return 'too-many-requests';
     default:
       return 'unknown-error';
   }
@@ -32,6 +34,7 @@ export const AuthProvider = ({children}: {children: JSX.Element}) => {
       await auth().signInWithEmailAndPassword(email, password);
     } catch (err) {
       const firebaseError = err as {code: string};
+      console.error(firebaseError);
       const _error = getAuthError(firebaseError.code);
       throw _error;
     }
@@ -42,6 +45,7 @@ export const AuthProvider = ({children}: {children: JSX.Element}) => {
       await auth().createUserWithEmailAndPassword(email, password);
     } catch (err) {
       const firebaseError = err as {code: string};
+      console.error(firebaseError);
       const _error = getAuthError(firebaseError.code);
       throw _error;
     }
@@ -53,6 +57,7 @@ export const AuthProvider = ({children}: {children: JSX.Element}) => {
       setUser(null);
     } catch (err) {
       const firebaseError = err as {code: string};
+      console.error(firebaseError);
       const _error = getAuthError(firebaseError.code);
       throw _error;
     }

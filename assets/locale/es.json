@@ -6,6 +6,7 @@
   "sign-in": "Iniciar sesión",
   "sign-up": "Regístrate",
   "errors": {
+    "email-already-in-use": "Este correo electrónico ya está en uso",
     "email-malformed": "El correo electrónico es inválido",
     "email-required": "El correo electrónico es obligatorio",
     "password-match": "Las contraseñas deben coincidir",
@@ -16,6 +17,10 @@
     "password-required": "La contraseña es obligatoria",
     "password-special-character": "Debe contener al menos un carácter especial",
     "password-upper-case": "Debe contener al menos una mayúscula",
-    "password-wrong": "Contraseña incorrecta"
+    "password-wrong": "Contraseña incorrecta",
+    "too-many-requests": "Hemos bloqueado todas las solicitudes de este dispositivo debido a actividad inusual. Vuelva a intentarlo más tarde",
+    "unknown-error": "Ocurrió un error al procesar su solicitud, intente nuevamente más tarde",
+    "user-not-found": "Ha introducido un correo electrónico o una contraseña incorrectos",
+    "wrong-password": "Ha introducido un correo electrónico o una contraseña incorrectos"
   }
 }

@@ -6,6 +6,7 @@
   "sign-in": "Sign in",
   "sign-up": "Sign up",
   "errors": {
+    "email-already-in-use": "This email is already in use",
     "email-malformed": "Email address is invalid",
     "email-required": "Email address is required",
     "password-match": "Passwords must match",
@@ -16,6 +17,10 @@
     "password-required": "Password is required",
     "password-special-character": "Must contain at least one special case character",
     "password-upper-case": "Must contain at least one uppercase",
-    "password-wrong": "Wrong password"
+    "password-wrong": "Wrong password",
+    "too-many-requests": "We have blocked all requests from this device due to unusual activity. Try again later",
+    "unknown-error": "An error occurred while processing your request, please try again later",
+    "user-not-found": "You  have entered incorrect email or password",
+    "wrong-password": "You  have entered incorrect email or password"
   }
 }

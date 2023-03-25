@@ -1,35 +1,38 @@
 import React from 'react';
 
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {ActivityIndicator, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {useTheme} from 'styled-components/native';
 import {Colors} from '../../styles/themes/types';
 
 type Props = {
-  /** Determines the height of the button and the fontSize */
-  height?: number;
-  /** Determines the minimun width of the button */
-  minWidth?: number | string;
   /** Determines the borderRadius of the button */
   borderRadius?: number;
   /** Determines the color of the button  */
   buttonColor?: string;
-  /** Determines the text color of the button string */
-  textColor?: string;
+  /** Text of the button */
+  children: string;
+  /** Determines the height of the button and the fontSize */
+  height?: number;
   /**
    * The margin property must be specified using four values.
    * The margins apply to the top, right, bottom, and left in that order (clockwise).
    * @default [0, 0, 0, 0]
    *  */
   margin?: [number, number, number, number];
-  children: string;
+  /** Determines the minimun width of the button */
+  minWidth?: number | string;
+  loading?: boolean;
+  /** Determines the text color of the button string */
+  textColor?: string;
   onPress?: () => void;
 };
 
-const Button = ({height = 50, minWidth, borderRadius = 10, buttonColor, textColor, margin, children, onPress}: Props) => {
+const Button = ({height = 50, minWidth, borderRadius = 10, buttonColor, textColor, margin, loading, children, onPress}: Props) => {
   const {colors} = useTheme();
   const styles = makeStyles(colors, height, borderRadius, minWidth, buttonColor, textColor, margin);
   return (
-    <TouchableOpacity style={styles.container} activeOpacity={0.8} onPress={onPress}>
+    <TouchableOpacity disabled={loading} style={styles.container} activeOpacity={0.8} onPress={onPress}>
+      {loading ? <ActivityIndicator size={height * 0.4} style={styles.activitiIndicator} color={textColor || colors.text.button} /> : null}
       <Text style={styles.text}>{children}</Text>
     </TouchableOpacity>
   );
@@ -46,6 +49,7 @@ const makeStyles = (
 ) =>
   StyleSheet.create({
     container: {
+      flexDirection: 'row',
       height: height,
       paddingHorizontal: 10,
       minWidth: minWidth,
@@ -62,6 +66,9 @@ const makeStyles = (
       fontSize: Math.ceil(height * 0.4),
       fontWeight: '600',
       color: textColor || colors.text.button,
+    },
+    activitiIndicator: {
+      marginRight: 10,
     },
   });
 

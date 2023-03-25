@@ -6,6 +6,7 @@
   "sign-in": "Zaloguj się",
   "sign-up": "Utwórz konto",
   "errors": {
+    "email-already-in-use": "Ten email jest już w użyciu",
     "email-malformed": "Adres email jest błędny",
     "email-required": "Adres email jest wymagany",
     "password-match": "Hasła muszą być takie same",
@@ -16,6 +17,10 @@
     "password-required": "Hasło jest wymagane",
     "password-special-character": "Hasło musi zawierać co najmniej 1 znak specjalny",
     "password-upper-case": "Hasło musi posiadać co najmniej 1 wielką literę",
-    "password-wrong": "Błędne hasło"
+    "password-wrong": "Błędne hasło",
+    "too-many-requests": "Zablokowaliśmy wszystkie żądania z tego urządzenia z powodu nietypowej aktywności. Spróbuj ponownie później",
+    "unknown-error": "Wystąpił błąd podczas przetwarzania żądania, spróbuj ponownie później",
+    "user-not-found": "Wpisałeś nieprawidłowy adres e-mail lub hasło",
+    "wrong-password": "Wpisałeś nieprawidłowy adres e-mail lub hasło"
   }
 }

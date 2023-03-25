@@ -24,6 +24,7 @@ type FormFields = {
 type FormErrors = {
   email: string[];
   password: string[];
+  backend?: string;
 };
 
 const SignInScreen = ({navigation}: Props) => {
@@ -36,9 +37,10 @@ const SignInScreen = ({navigation}: Props) => {
   const passwordRef: TextInputRef = useRef(null);
 
   const form = useRef<FormFields>({email: '', password: ''});
-  const [errors, setErrors] = useState<FormErrors>({email: [], password: []});
+  const [errors, setErrors] = useState<FormErrors>({email: [], password: [], backend: ''});
 
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const toggleShowPassword = () => {
     setShowPassword(old => !old);
@@ -49,16 +51,18 @@ const SignInScreen = ({navigation}: Props) => {
   };
 
   const handleSubmit = async () => {
+    setLoading(true);
     try {
       await signInSchema.validate({...form.current}, {abortEarly: false});
       await signIn(form.current.email, form.current.password);
     } catch (err) {
       if (typeof err === 'string') {
-        console.log(err);
+        setErrors(value => ({...value, backend: err as string}));
       } else {
         setErrors(getAuthYupErrors((err as {inner: {message: string; path: keyof FormFields}[]}).inner));
       }
     }
+    setLoading(false);
   };
 
   return (
@@ -79,6 +83,7 @@ const SignInScreen = ({navigation}: Props) => {
                 form.current.email = text;
                 emailRef.current?.setNativeProps({text});
                 errors.email.length > 0 && setErrors(value => ({...value, email: []}));
+                errors.backend && setErrors(value => ({...value, backend: ''}));
               }}
               error={errors.email[0] ? i18n.t(`errors.${errors.email[0]}`) : ''}
             />
@@ -95,11 +100,14 @@ const SignInScreen = ({navigation}: Props) => {
                 form.current.password = text;
                 passwordRef.current?.setNativeProps({text});
                 errors.password.length > 0 && setErrors(value => ({...value, password: []}));
+                errors.backend && setErrors(value => ({...value, backend: ''}));
               }}
               error={errors.password[0] ? i18n.t(`errors.${errors.password[0]}`) : ''}
             />
 
-            <Button minWidth="88%" height={50} borderRadius={15} margin={[10, 0, 0, 0]} onPress={handleSubmit}>
+            {errors.backend ? <Text style={styles.errorText}>{i18n.t(`errors.${errors.backend}`)}</Text> : null}
+
+            <Button minWidth="88%" height={50} borderRadius={15} margin={[10, 0, 0, 0]} loading={loading} onPress={handleSubmit}>
               {i18n.t('sign-in')}
             </Button>
           </View>
@@ -161,6 +169,11 @@ const makeStyles = (colors: Colors) =>
       fontSize: 14,
       fontWeight: '700',
       color: colors.primary.main,
+    },
+    errorText: {
+      fontSize: 14,
+      color: colors.error.main,
+      width: '88%',
     },
   });
 
