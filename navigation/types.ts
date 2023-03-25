@@ -3,4 +3,5 @@ export type RootStackParamList = {
   SignInScreen: undefined;
   SignUpScreen: undefined;
   LandingScreen: undefined;
+  ForgotPasswordScreen: undefined;
 };

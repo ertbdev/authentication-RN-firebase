@@ -7,6 +7,7 @@ type AuthContext = {
   signInUser: (email: string, password: string) => Promise<void>;
   signUpUser: (email: string, password: string) => Promise<void>;
   signOutUser: () => Promise<void>;
+  sendPasswordResetEmail: (email: string) => Promise<void>;
 };
 
 const context = createContext<AuthContext | null>(null);
@@ -63,6 +64,17 @@ export const AuthProvider = ({children}: {children: JSX.Element}) => {
     }
   };
 
+  const sendPasswordResetEmail = useCallback(async (email: string) => {
+    try {
+      await auth().sendPasswordResetEmail(email);
+    } catch (err) {
+      const firebaseError = err as {code: string};
+      console.error(firebaseError);
+      const _error = getAuthError(firebaseError.code);
+      throw _error;
+    }
+  }, []);
+
   const getLoggedUser = useCallback(async (loggedUser: FirebaseAuthTypes.User | null) => {
     setUser(loggedUser);
   }, []);
@@ -79,8 +91,9 @@ export const AuthProvider = ({children}: {children: JSX.Element}) => {
       signInUser,
       signUpUser,
       signOutUser,
+      sendPasswordResetEmail,
     }),
-    [user, signInUser, signUpUser],
+    [user, signInUser, signUpUser, sendPasswordResetEmail],
   );
 
   return <context.Provider value={contextValue}>{children}</context.Provider>;

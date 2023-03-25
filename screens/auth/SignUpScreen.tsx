@@ -1,6 +1,6 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useRef, useState} from 'react';
-import {View, StyleSheet, Text, Pressable} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useTheme} from 'styled-components/native';
 import {RootStackParamList} from '../../navigation/types';
@@ -53,7 +53,7 @@ const SignInScreen = ({navigation}: Props) => {
     setShowConfirmPassword(old => !old);
   };
 
-  const handleSignUpPress = () => {
+  const handleSignInPress = () => {
     navigation.replace('SignInScreen');
   };
 
@@ -138,10 +138,10 @@ const SignInScreen = ({navigation}: Props) => {
           </View>
 
           <View style={styles.bottomContainer}>
-            <Text style={styles.accountText}>{i18n.t('have-account')}? </Text>
-            <Pressable onPress={handleSignUpPress}>
-              <Text style={styles.signUpText}>{i18n.t('sign-in')}</Text>
-            </Pressable>
+            <Text style={styles.accountText}>{i18n.t('have-account')} </Text>
+            <Button mode="text" textSize={14} onPress={handleSignInPress}>
+              {i18n.t('sign-in')}
+            </Button>
           </View>
         </View>
       </WrapperAvoidance>
@@ -188,11 +188,6 @@ const makeStyles = (colors: Colors) =>
     },
     accountText: {
       fontSize: 14,
-      color: colors.primary.main,
-    },
-    signUpText: {
-      fontSize: 14,
-      fontWeight: '700',
       color: colors.primary.main,
     },
     errorText: {

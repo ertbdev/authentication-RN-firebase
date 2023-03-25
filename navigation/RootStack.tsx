@@ -2,6 +2,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import {useAuthContext} from '../providers/AuthProvider';
+import ForgotPasswordScreen from '../screens/auth/ForgotPasswordScreen';
 import SignInScreen from '../screens/auth/SignInScreen';
 import SignUpScreen from '../screens/auth/SignUpScreen';
 import LandingScreen from '../screens/LandingScreen';
@@ -20,6 +21,7 @@ const RootStack = () => {
           <Stack.Group>
             <Stack.Screen name="SignInScreen" component={SignInScreen} />
             <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+            <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} />
           </Stack.Group>
         )}
       </Stack.Navigator>

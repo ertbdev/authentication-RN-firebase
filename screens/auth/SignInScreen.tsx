@@ -1,6 +1,6 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useRef, useState} from 'react';
-import {View, StyleSheet, Text, Pressable} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useTheme} from 'styled-components/native';
 import {RootStackParamList} from '../../navigation/types';
@@ -48,6 +48,10 @@ const SignInScreen = ({navigation}: Props) => {
 
   const handleSignUpPress = () => {
     navigation.replace('SignUpScreen');
+  };
+
+  const handleForgotPasswordPress = () => {
+    navigation.navigate('ForgotPasswordScreen');
   };
 
   const handleSubmit = async () => {
@@ -110,13 +114,16 @@ const SignInScreen = ({navigation}: Props) => {
             <Button minWidth="88%" height={50} borderRadius={15} margin={[10, 0, 0, 0]} loading={loading} onPress={handleSubmit}>
               {i18n.t('sign-in')}
             </Button>
+            <Button mode="text" textSize={16} margin={[10, 0, 0, 0]} onPress={handleForgotPasswordPress}>
+              {i18n.t('forgot-password')}?
+            </Button>
           </View>
 
           <View style={styles.bottomContainer}>
-            <Text style={styles.noAccountText}>{i18n.t('do-not-have-account')}? </Text>
-            <Pressable onPress={handleSignUpPress}>
-              <Text style={styles.signUpText}>{i18n.t('sign-up')}</Text>
-            </Pressable>
+            <Text style={styles.noAccountText}>{i18n.t('do-not-have-account')} </Text>
+            <Button mode="text" textSize={14} onPress={handleSignUpPress}>
+              {i18n.t('sign-up')}
+            </Button>
           </View>
         </View>
       </WrapperAvoidance>
@@ -133,17 +140,6 @@ const makeStyles = (colors: Colors) =>
       flex: 1,
       justifyContent: 'space-between',
       backgroundColor: colors.background.screen,
-    },
-    title: {
-      fontSize: 24,
-      fontWeight: '600',
-      color: colors.primary.main,
-    },
-    text: {
-      fontSize: 18,
-      fontWeight: '600',
-      color: colors.primary.main,
-      marginTop: 30,
     },
     icon: {
       marginBottom: 20,
@@ -163,11 +159,6 @@ const makeStyles = (colors: Colors) =>
     },
     noAccountText: {
       fontSize: 14,
-      color: colors.primary.main,
-    },
-    signUpText: {
-      fontSize: 14,
-      fontWeight: '700',
       color: colors.primary.main,
     },
     errorText: {
