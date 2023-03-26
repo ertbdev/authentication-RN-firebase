@@ -5,11 +5,13 @@
   "forgot-password": "Nie pamiętasz hasła",
   "have-account": "Masz konta?",
   "open-email-app": "Otwórz aplikację e-mail",
+  "or": "Lub",
   "password": "Hasło",
   "reset-email-message": "Wprowadź adres e-mail powiązany z Twoim kontem, a wyślemy wiadomość e-mail z instrukcjami resetowania hasła",
   "send-instructions": "Wyślij instrukcje",
   "sent-email-message": "Wysłaliśmy instrukcje odzyskiwania hasła na Twój adres e-mail",
   "sign-in": "Zaloguj się",
+  "sign-in-with": "Zaloguj się za pomocą",
   "sign-up": "Utwórz konto",
   "try-another-email": "Spróbuj inny adres e-mail",
   "errors": {

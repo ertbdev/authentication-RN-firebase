@@ -5,11 +5,13 @@
   "forgot-password": "¿no recuerdas la contraseña?",
   "have-account": "Tienes una cuenta",
   "open-email-app": "Abrir aplicación de correo electrónico",
+  "or": "O",
   "password": "Contraseña",
   "reset-email-message": "Ingrese el correo electrónico asociado con su cuenta y le enviaremos un correo electrónico con instrucciones para restablecer su contraseña",
   "send-instructions": "Enviar instrucciones",
   "sent-email-message": "Hemos enviado instrucciones de recuperación de contraseña a su correo electrónico",
   "sign-in": "Iniciar sesión",
+  "sign-in-with": "Iniciar sesión con",
   "sign-up": "Regístrate",
   "try-another-email": "probar con otra dirección de correo electrónico",
   "errors": {

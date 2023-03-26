@@ -1,6 +1,6 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useRef, useState} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {View, StyleSheet, Text, KeyboardEvent, Platform, Keyboard, ActivityIndicator} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useTheme} from 'styled-components/native';
 import {RootStackParamList} from '../../navigation/types';
@@ -13,6 +13,7 @@ import WrapperAvoidance from '../../components/common/WrapperAvoidance';
 import {signInSchema} from '../../schemas/signInSchema';
 import {getAuthYupErrors} from '../../functions/getYupErrors';
 import {useAuthContext} from '../../providers/AuthProvider';
+import GoogleLogo from '../../assets/svg/GoogleLogo';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SignInScreen'>;
 
@@ -32,6 +33,7 @@ const SignInScreen = ({navigation}: Props) => {
   const styles = makeStyles(colors);
 
   const signIn = useAuthContext().signInUser;
+  const singInUserUsingGoogle = useAuthContext().singInUserUsingGoogle;
 
   const emailRef: TextInputRef = useRef(null);
   const passwordRef: TextInputRef = useRef(null);
@@ -41,6 +43,8 @@ const SignInScreen = ({navigation}: Props) => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const [keyboardOpen, setKeyboardOpen] = useState(false);
 
   const toggleShowPassword = () => {
     setShowPassword(old => !old);
@@ -68,6 +72,39 @@ const SignInScreen = ({navigation}: Props) => {
     }
     setLoading(false);
   };
+
+  const handleGoogleSignIn = async () => {
+    setGoogleLoading(true);
+    try {
+      await singInUserUsingGoogle();
+    } catch (err) {
+      setErrors(value => ({...value, backend: err as string}));
+    }
+    setGoogleLoading(false);
+  };
+
+  useEffect(() => {
+    function onKeyboardChange(e: KeyboardEvent) {
+      if (Platform.OS === 'ios') {
+        const translationValue = (e.startCoordinates?.screenY || 0) - e.endCoordinates.screenY;
+        const keyboardHeight = translationValue > 0 ? translationValue : 0;
+        setKeyboardOpen(keyboardHeight > 0);
+      } else {
+        setKeyboardOpen(e.endCoordinates.height > 0);
+      }
+    }
+
+    if (Platform.OS === 'ios') {
+      const subscription = Keyboard.addListener('keyboardWillChangeFrame', onKeyboardChange);
+      return () => subscription.remove();
+    }
+
+    const subscriptions = [
+      Keyboard.addListener('keyboardDidHide', onKeyboardChange),
+      Keyboard.addListener('keyboardDidShow', onKeyboardChange),
+    ];
+    return () => subscriptions.forEach(subscription => subscription.remove());
+  }, []);
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['left', 'right', 'top']}>
@@ -111,22 +148,40 @@ const SignInScreen = ({navigation}: Props) => {
 
             {errors.backend ? <Text style={styles.errorText}>{i18n.t(`errors.${errors.backend}`)}</Text> : null}
 
-            <Button minWidth="88%" height={50} borderRadius={15} margin={[10, 0, 0, 0]} loading={loading} onPress={handleSubmit}>
-              {i18n.t('sign-in')}
-            </Button>
-            <Button mode="text" textSize={16} margin={[10, 0, 0, 0]} onPress={handleForgotPasswordPress}>
+            <Button mode="text" textSize={16} margin={[5, 0, 0, 0]} onPress={handleForgotPasswordPress}>
               {i18n.t('forgot-password')}?
             </Button>
+
+            <Button minWidth="88%" height={50} margin={[20, 0, 0, 0]} loading={loading} onPress={handleSubmit}>
+              {i18n.t('sign-in')}
+            </Button>
+
+            {keyboardOpen ? null : (
+              <>
+                <Text style={styles.orText}>-- {i18n.t('or')} --</Text>
+                <Text style={styles.text}>{i18n.t('sign-in-with')}</Text>
+                <Button mode="rounded" buttonColor="#FFF" height={50} margin={[20, 0, 0, 0]} onPress={handleGoogleSignIn}>
+                  <GoogleLogo size={26} />
+                </Button>
+              </>
+            )}
           </View>
 
-          <View style={styles.bottomContainer}>
-            <Text style={styles.noAccountText}>{i18n.t('do-not-have-account')} </Text>
-            <Button mode="text" textSize={14} onPress={handleSignUpPress}>
-              {i18n.t('sign-up')}
-            </Button>
-          </View>
+          {keyboardOpen ? null : (
+            <View style={styles.bottomContainer}>
+              <Text style={styles.text}>{i18n.t('do-not-have-account')} </Text>
+              <Button mode="text" textSize={14} onPress={handleSignUpPress}>
+                {i18n.t('sign-up')}
+              </Button>
+            </View>
+          )}
         </View>
       </WrapperAvoidance>
+      {googleLoading ? (
+        <View style={styles.backdrop}>
+          <ActivityIndicator size={100} color={colors.primary.main} />
+        </View>
+      ) : null}
     </SafeAreaView>
   );
 };
@@ -140,6 +195,15 @@ const makeStyles = (colors: Colors) =>
       flex: 1,
       justifyContent: 'space-between',
       backgroundColor: colors.background.screen,
+      paddingBottom: 20,
+    },
+    backdrop: {
+      position: 'absolute',
+      height: '100%',
+      width: '100%',
+      backgroundColor: 'rgba(0,0,0,0.5)',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     icon: {
       marginBottom: 20,
@@ -155,9 +219,8 @@ const makeStyles = (colors: Colors) =>
       flexDirection: 'row',
       width: '100%',
       justifyContent: 'center',
-      paddingBottom: 20,
     },
-    noAccountText: {
+    text: {
       fontSize: 14,
       color: colors.primary.main,
     },
@@ -165,6 +228,12 @@ const makeStyles = (colors: Colors) =>
       fontSize: 14,
       color: colors.error.main,
       width: '88%',
+    },
+    orText: {
+      fontSize: 14,
+      color: colors.primary.main,
+      textTransform: 'uppercase',
+      marginVertical: 20,
     },
   });
 

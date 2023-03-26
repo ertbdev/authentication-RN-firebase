@@ -24,9 +24,15 @@ type Props = {
   /** Determines the style of the button
    * values: 'text': flat button without background | 'contained':  button with a background color
    */
-  mode?: 'text' | 'contained';
+  mode?: 'text' | 'contained' | 'rounded';
   /** Whether to show a loading indicator. */
   loading?: boolean;
+  /** Whether to show shadow.
+   * @default true
+   */
+  shadow?: boolean;
+  /** Shadow color, only if shadow is true. */
+  shadowColor?: string;
   /** Determines the text color of the button string */
   textColor?: string;
   /** Determines the text size of the button */
@@ -37,7 +43,7 @@ type Props = {
 const Button = ({
   height = 50,
   minWidth,
-  borderRadius = 10,
+  borderRadius = 15,
   buttonColor,
   textColor,
   textSize,
@@ -45,22 +51,37 @@ const Button = ({
   loading,
   children,
   mode = 'contained',
+  shadow = true,
+  shadowColor,
   onPress,
 }: Props) => {
   const {colors} = useTheme();
   const _textSize = textSize ? (textSize > Math.ceil(height * 0.7) ? Math.ceil(height * 0.7) : textSize) : Math.ceil(height * 0.4);
   const styles = makeStyles(colors, mode, height, borderRadius, minWidth, buttonColor, textColor, _textSize, margin);
+
+  const shadowStyle = {
+    shadowColor: shadowColor ? shadowColor : colors.text.dark,
+    shadowOffset: {width: 1, height: 1},
+    shadowOpacity: 0.4,
+    shadowRadius: 3,
+    elevation: 5,
+  };
+
   return (
-    <TouchableOpacity disabled={loading} style={styles.container} activeOpacity={0.8} onPress={onPress}>
+    <TouchableOpacity
+      disabled={loading}
+      style={[styles.container, shadow && mode !== 'text' && shadowStyle]}
+      activeOpacity={0.8}
+      onPress={onPress}>
       {loading ? <ActivityIndicator size={_textSize} style={styles.activitiIndicator} color={textColor || colors.text.button} /> : null}
-      <Text style={styles.text}>{children}</Text>
+      {!(mode === 'rounded' && loading) ? <Text style={styles.text}>{children}</Text> : null}
     </TouchableOpacity>
   );
 };
 
 const makeStyles = (
   colors: Colors,
-  mode: 'text' | 'contained',
+  mode: 'text' | 'contained' | 'rounded',
   height: number,
   borderRadius: number,
   minWidth?: number | string,
@@ -73,9 +94,10 @@ const makeStyles = (
     container: {
       flexDirection: 'row',
       height: mode === 'text' ? undefined : height,
+      width: mode === 'rounded' ? height : undefined,
       paddingHorizontal: mode === 'text' ? 0 : 10,
-      minWidth: minWidth,
-      borderRadius: borderRadius,
+      minWidth: mode === 'rounded' ? undefined : minWidth,
+      borderRadius: mode === 'rounded' ? height / 2 : borderRadius,
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: mode === 'text' ? 'transparent' : buttonColor || colors.primary.main,
@@ -90,7 +112,7 @@ const makeStyles = (
       color: textColor ? textColor : mode === 'text' ? colors.primary.main : colors.text.button,
     },
     activitiIndicator: {
-      marginRight: 10,
+      marginRight: mode === 'rounded' ? 0 : 10,
     },
   });
 
