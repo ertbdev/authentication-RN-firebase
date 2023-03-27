@@ -32,7 +32,7 @@ const makeStyles = (colors: Colors) =>
     },
     container: {
       flex: 1,
-      justifyContent: 'center',
+      justifyContent: 'space-around',
       alignItems: 'center',
       backgroundColor: colors.background.screen,
     },
