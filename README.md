@@ -42,7 +42,7 @@ This application allows users to sign in / sign up through the strategies: Email
 
 ### Sign In UI
 
-![singin-1](https://firebasestorage.googleapis.com/v0/b/portfolio-4de53.appspot.com/o/readme%2Fauth-UI.png?alt=media&token=a442e06b-0bf4-4e65-bb11-d4e5b4bcc34e)
+![singin-1](https://firebasestorage.googleapis.com/v0/b/portfolio-4de53.appspot.com/o/readme%2Fauth-UI.png?alt=media&token=07cfa234-23af-464e-a643-04e0fbc40ef0)
 
 <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-4de53.appspot.com/o/readme%2Fsigin.gif?alt=media&token=e4c849a1-8ba3-4b40-b2dd-51e92e384264" width="200">
 
