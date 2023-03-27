@@ -114,7 +114,7 @@ const SignInScreen = ({navigation}: Props) => {
 
             <TextInput
               ref={confirmPasswordRef}
-              label={`${i18n.t('password')}:`}
+              label={`${i18n.t('confirm-password')}:`}
               width={'90%'}
               keyboardType="ascii-capable"
               secureTextEntry={!showConfirmPassword}
